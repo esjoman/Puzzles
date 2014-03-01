@@ -3,7 +3,8 @@
 #
 #  pc3.py
 
-import urllib, re
+import urllib
+import re
 from HTMLParser import HTMLParser
 
 title = 're'
@@ -24,15 +25,18 @@ class CommentParser(HTMLParser):
 
 
 def solution():
+    """Returns the url of the next problem"""
     parser = CommentParser()
-    parser.feed( urllib.urlopen(url).read() )
+    parser.feed(urllib.urlopen(url).read())
     text = parser.comments[0]
+    # re matches a lowercase letter surrounded by no more and no less
+    # than 3 uppercase letters
     pattern = r'[^A-Z][A-Z]{3}([a-z])[A-Z]{3}[^A-Z]'
     split_url = url.split('/')
-    document = split_url.pop(-1) # 'equality.html'
+    document = split_url.pop(-1)  # 'equality.html'
     split_doc = document.split('.')
-    split_doc[0] = ''.join( re.findall(pattern, text) ) # 'linkedlist'
-    split_url.append( '.'.join(split_doc) )
+    split_doc[0] = ''.join(re.findall(pattern, text))  # 'linkedlist'
+    split_url.append('.'.join(split_doc))
     return '/'.join(split_url)
 
 if __name__ == '__main__':

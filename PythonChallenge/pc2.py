@@ -25,15 +25,16 @@ class CommentParser(HTMLParser):
 
 
 def solution():
+    """Returns the url of the next problem"""
     parser = CommentParser()
-    parser.feed( urllib.urlopen(url).read() )
+    parser.feed(urllib.urlopen(url).read())
     mess = parser.comments[-1]
     split_url = url.split('/')
-    document = split_url.pop(-1) # 'ocr.html'
+    document = split_url.pop(-1)  # 'ocr.html'
     split_doc = document.split('.')
-    split_doc[0] = filter(str.isalpha, mess) # 'equality'
-    split_url.append( '.'.join(split_doc) )
-    return '/'.join(split_url)
+    split_doc[0] = filter(str.isalpha, mess)  # 'equality'
+    split_url.append('.'.join(split_doc))
+    return '/'.join(split_url)  # 'equality.html'
 
 if __name__ == '__main__':
     print '2.', title, url, description, hint

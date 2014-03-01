@@ -3,14 +3,15 @@
 #
 #  pc5.py
 
-import urllib, pickle
+import urllib
+import pickle
 from HTMLParser import HTMLParser
 
 title = 'peak hell'
 url = 'http://www.pythonchallenge.com/pc/def/peak.html'
 description = ('In the HTML document there is a "peakhell" tag with '
                'src="banner.p" which contains a pickled object.')
-hint = 'Hint: pronounce it' # peak hell => pickle
+hint = 'Hint: pronounce it'  # peak hell => pickle
 
 class PeakhellParser(HTMLParser):
     """Extends HTMLParser, retrieves peakhell tag src"""
@@ -33,16 +34,17 @@ def banner(lol):
     print result
 
 def solution():
+    """Returns the url of the next problem"""
     parser = PeakhellParser()
-    parser.feed( urllib.urlopen(url).read() )
+    parser.feed(urllib.urlopen(url).read())
     split_url = url.split('/')
-    document = split_url.pop(-1) # '0.html'
+    document = split_url.pop(-1)  # 'peak.html'
     pickle_url = '/'.join(split_url) + '/' + parser.peakhells[0]
-    unpickle = pickle.load( urllib.urlopen(pickle_url) )
-    banner(unpickle) # channel
-    doctype = document.split('.')[-1] # 'html'
-    split_url.append( '.'.join(['channel', doctype]) )
-    return '/'.join(split_url)
+    unpickle = pickle.load(urllib.urlopen(pickle_url))
+    banner(unpickle)  # 'channel'
+    doctype = document.split('.')[-1]  # 'html'
+    split_url.append('.'.join(['channel', doctype]))
+    return '/'.join(split_url)  # 'channel.html'
 
 if __name__ == '__main__':
     print '5.', title, url, description, hint

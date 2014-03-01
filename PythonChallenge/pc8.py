@@ -3,7 +3,9 @@
 #
 #  pc8.py
 
-import urllib, re, bz2
+import urllib
+import re
+import bz2
 from HTMLParser import HTMLParser
 
 title = 'working hard?'
@@ -13,7 +15,7 @@ description = ('The HTML document of the problem contains one large '
                'comment containing an obfuscated username and '
                'password. The link on the bee image leads to another '
                'page that requires a username and password.')
-hint = ('Hint: inflate')
+hint = 'Hint: inflate'
 
 class CommentParser(HTMLParser):
     """
@@ -26,14 +28,16 @@ class CommentParser(HTMLParser):
 
 
 def solution():
+    """Returns the url of the next problem with username and password"""
     parser = CommentParser()
-    parser.feed( urllib.urlopen(url).read() )
+    parser.feed(urllib.urlopen(url).read())
     text = parser.comments[0].decode('string_escape')
+    # returns everything between two single quotes
     un, pw = re.findall(r"\'(.+)\'", text)
     un = bz2.decompress(un)
     pw = bz2.decompress(pw)
     return '%s un:%s pw:%s' % (auth_url, un, pw)
 
 if __name__ == '__main__':
-    print '3.', title, url, description, hint
+    print '8.', title, url, description, hint
     print solution()

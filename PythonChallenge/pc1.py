@@ -25,17 +25,18 @@ def decrypt(s):
     Replaces each letter with the letter 2 places down which wraps 
     around. E.g. K->M, O->Q, E->G
     """
-    alphabet = string.ascii_lowercase   # 'abcdefghijklmnopqrstuvwxyz'
-    trans = alphabet[2:] + alphabet[:2] # 'cdefghijklmnopqrstuvwxyzab'
+    alphabet = string.ascii_lowercase    # 'abcdefghijklmnopqrstuvwxyz'
+    trans = alphabet[2:] + alphabet[:2]  # 'cdefghijklmnopqrstuvwxyzab'
     return s.translate(string.maketrans(alphabet, trans))
 
 def solution():
+    """Returns the url of the next problem"""
     split_url = url.split('/')
-    document = split_url.pop(-1) # 'map.html'
+    document = split_url.pop(-1)  # 'map.html'
     split_doc = document.split('.')
     split_doc[0] = decrypt(split_doc[0])
-    split_url.append( '.'.join(split_doc) )
-    return '/'.join(split_url)
+    split_url.append('.'.join(split_doc))
+    return '/'.join(split_url)  # 'ocr.html'
 
 if __name__ == '__main__':
     print '1.', title, url, description, hint
